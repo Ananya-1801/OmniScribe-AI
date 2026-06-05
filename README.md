@@ -145,14 +145,14 @@ A browser tab opens at `http://localhost:8501`.
 
 ## How It Works
 
-1.Extract transcript from a YouTube video.
-2.Split transcript into timestamp-aware chunks.
-3.Generate embeddings using MiniLM.
-4.Store vectors locally in FAISS.
-5.Retrieve the most relevant chunks for a user query.
-6.Inject retrieved context into a prompt.
-7.Generate grounded responses using LLaMA 3.1.
-8.Display answer with timestamp-linked citations.
+- Extract transcript from a YouTube video.
+- Split transcript into timestamp-aware chunks.
+- Generate embeddings using MiniLM.
+- Store vectors locally in FAISS.
+- Retrieve the most relevant chunks for a user query.
+- Inject retrieved context into a prompt.
+- Generate grounded responses using LLaMA 3.1.
+- Display answer with timestamp-linked citations.
 
 ---
 
@@ -189,12 +189,12 @@ Attached metadata to each transcript chunk, enabling direct navigation to the re
 
 ## 🎓 Key Learnings
 
--Retrieval-Augmented Generation (RAG)
--Vector databases and semantic search
--Embedding models and chunking strategies
--Prompt engineering for grounded generation
--Streamlit application development
--Production-ready Python project structure
+- Retrieval-Augmented Generation (RAG)
+- Vector databases and semantic search
+- Embedding models and chunking strategies
+- Prompt engineering for grounded generation
+- Streamlit application development
+- Production-ready Python project structure
 
 ---
 
