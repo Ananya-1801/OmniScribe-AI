@@ -13,15 +13,30 @@ from langchain_community.vectorstores import FAISS
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-
+from pydantic import BaseModel,field_validator
 from dotenv import load_dotenv
 
 load_dotenv()
 
+class TranscriptChunk(BaseModel):
+    "" "Validates each transcript chunk before embedding."""
+    page_content:str
+    start_time:float
+    timestamp_url:str
+    video_id:str
 
-# ------------------------------------------------------------------
-# Helpers
-# ------------------------------------------------------------------
+    @field_validator('page_content')
+    def check_content_meaningful(cls,v):
+        if len(v.strip())<15:
+            raise ValueError('Chunk too short to embed meaningfully')
+        return v.strip()
+    
+class QueryResponse(BaseModel):
+    """Structured response returned from RAG pipeline."""
+    answer:str
+    video_id:str
+    sources_used:int
+    context_length:int
 
 def extract_video_id(url: str) -> str:
     """Extract YouTube video ID from multiple URL formats."""
@@ -52,9 +67,6 @@ def _get_embeddings() -> HuggingFaceEmbeddings:
     )
 
 
-# ------------------------------------------------------------------
-# Transcript Loading
-# ------------------------------------------------------------------
 
 def load_video(url: str) -> tuple[list[Document], str]:
     """
@@ -143,9 +155,6 @@ def load_video(url: str) -> tuple[list[Document], str]:
     return documents, video_id
 
 
-# ------------------------------------------------------------------
-# Vector Store
-# ------------------------------------------------------------------
 
 def create_or_load_vectorstore(
     documents: list[Document],
@@ -176,9 +185,7 @@ def create_or_load_vectorstore(
     return vectorstore
 
 
-# ------------------------------------------------------------------
-# Question Answering
-# ------------------------------------------------------------------
+
 
 def get_answer(
     vectorstore: FAISS,
@@ -231,4 +238,10 @@ Transcript context:
         }
     )
 
-    return answer, source_docs
+    return QueryResponse(
+        answer=answer,
+        video_id=source_docs[0].metadata.get("video_id",""),
+        source_used=len(source_docs),
+        context_length=len(context)
+    ),source_docs
+
