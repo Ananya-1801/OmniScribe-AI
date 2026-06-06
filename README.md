@@ -141,6 +141,10 @@ streamlit run app.py
 ```
 A browser tab opens at `http://localhost:8501`.
 
+> [!NOTE]
+> YouTube transcript fetching is blocked on cloud provider IPs (AWS/GCP) by YouTube.
+> Run locally with `streamlit run app.py` for full functionality. The deployed link demonstrates the UI and codebase.
+
 ---
 
 ## How It Works
