@@ -15,6 +15,7 @@
 - 🔍 Semantic search using FAISS vector embeddings
 - 💬 Conversational Q&A over video content
 - ⏱️ Clickable timestamp citations
+- 🔒 Pydantic-validated pipeline outputs
 - ⚡ Fast inference with Groq LLaMA 3.1
 - 🆓 Fully powered by free APIs and local embeddings
 
@@ -92,6 +93,7 @@ OmniScribe-AI/
 │
 ├── app.py
 ├── rag_pipeline.py
+├── main.py
 ├── requirements.txt
 ├── .env
 ├── faiss_cache/
@@ -166,9 +168,9 @@ A browser tab opens at `http://localhost:8501`.
 
 Handled breaking API changes introduced in newer versions of youtube-transcript-api.
 
-### Streamlit Concurrency
+### Concurrency
 
-Resolved transcript-fetching issues by moving blocking operations to worker threads.
+Resolved it by wrapping blocking HTTP calls in concurrent.futures.ThreadPoolExecutor, isolating transcript fetching from Streamlit's main thread
 
 ### Hallucination Control
 
@@ -187,7 +189,7 @@ Attached metadata to each transcript chunk, enabling direct navigation to the re
 - Playlist indexing
 - Pinecone/Qdrant integration
 - RAGAS evaluation metrics
-- Structured outputs with Pydantic
+  
 
 ---
 
