@@ -8,6 +8,7 @@ from rag_pipeline import (
     get_answer,
 )
 
+groq_api_key = st.secrets["GROQ_API_KEY"]
 
 st.set_page_config(
     page_title="OmniScribe AI",
